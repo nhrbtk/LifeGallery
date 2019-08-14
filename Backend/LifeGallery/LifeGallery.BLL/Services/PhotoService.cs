@@ -27,7 +27,8 @@ namespace LifeGallery.BLL.Services
             try
             {
                 Photo photo = Mapper.Map<Photo>(photoDto);
-                photo.UserProfile = Database.ProfileManager.Read(photo.UserProfile.Id);
+                
+                photo.UserProfile = Database.ProfileManager.Read(photoDto.User.Id);
                 Database.PhotoManager.Create(photo, photoDto.File);
                 await Database.SaveAsync();
             }

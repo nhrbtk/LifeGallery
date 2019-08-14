@@ -1,7 +1,9 @@
 ﻿using LifeGallery.BLL.Interfaces;
 using LifeGallery.BLL.Services;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
@@ -9,11 +11,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+[assembly: OwinStartup(typeof(LifeGallery.WEB.App_Start.Startup))]
+
 namespace LifeGallery.WEB.App_Start
 {
     public class Startup
     {
         IServiceCreator serviceCreator = new ServiceCreator();
+
         public void Configuration(IAppBuilder app)
         {
             app.CreatePerOwinContext<IUserService>(CreateUserService);
@@ -22,7 +27,7 @@ namespace LifeGallery.WEB.App_Start
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
+                LoginPath = new PathString("/api/login"),
             });
         }
 

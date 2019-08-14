@@ -2,6 +2,7 @@
 using LifeGallery.BLL.DTO;
 using LifeGallery.BLL.Interfaces;
 using LifeGallery.DAL.Entities;
+using LifeGallery.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,12 +33,12 @@ namespace LifeGallery.BLL.Services
         }
         public IPhotoService CreatePhotoService(string connection)
         {
-            throw new NotImplementedException();
+            return new PhotoService(new LGUnitOfWork(connection));
         }
 
         public IUserService CreateUserService(string connection)
         {
-            throw new NotImplementedException();
+            return new UserService(new LGUnitOfWork(connection));
         }
     }
 }

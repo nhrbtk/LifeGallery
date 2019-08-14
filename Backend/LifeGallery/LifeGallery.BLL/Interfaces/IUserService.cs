@@ -13,6 +13,7 @@ namespace LifeGallery.BLL.Interfaces
     {
         Task<OperationDetails> Create(UserDTO userDTO);
         UserDTO Read(string id);
+        UserDTO ReadByUserName(string username);
         IEnumerable<UserDTO> GetAll();
         Task<OperationDetails> Delete(string id);
         Task<OperationDetails> ChangePassword(string id, string currentPassword, string newPassword);

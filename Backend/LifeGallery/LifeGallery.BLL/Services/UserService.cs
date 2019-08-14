@@ -27,7 +27,7 @@ namespace LifeGallery.BLL.Services
         {
             ClaimsIdentity claim = null;
             // находим пользователя
-            ApplicationUser user = await Database.UserManager.FindAsync(userDTO.Email, userDTO.Password);
+            ApplicationUser user = await Database.UserManager.FindAsync(userDTO.UserName, userDTO.Password);
             // авторизуем его и возвращаем объект ClaimsIdentity
             if (user != null)
                 claim = await Database.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
@@ -48,7 +48,7 @@ namespace LifeGallery.BLL.Services
             ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDTO.Email);
             if (user == null)
             {
-                user = new ApplicationUser { Email = userDTO.Email, UserName = userDTO.Email };
+                user = new ApplicationUser { Email = userDTO.Email, UserName = userDTO.UserName ?? userDTO.Email };
                 var result = await Database.UserManager.CreateAsync(user, userDTO.Password);
                 if (result.Errors.Count() > 0)
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
@@ -72,6 +72,7 @@ namespace LifeGallery.BLL.Services
             if (user != null)
             {
                 await Database.UserManager.DeleteAsync(user);
+                await Database.SaveAsync();
                 return new OperationDetails(true, "User deleted.", user.Id);
             }
             else
@@ -106,6 +107,20 @@ namespace LifeGallery.BLL.Services
             return userDTO;
         }
 
+        public UserDTO ReadByUserName(string username)
+        {
+            var appUser = Database.UserManager.FindByName(username);
+            if (appUser == null)
+                return null;
+            var userDTO = Mapper.Map<UserDTO>(Database.ProfileManager.Read(appUser.Id));
+            if (userDTO != null)
+            {
+                userDTO.Email = appUser.Email;
+                userDTO.UserName = appUser.UserName;
+            }
+            return userDTO;
+        }
+
         public async Task SetInitialData(UserDTO adminDto, List<string> roles)
         {
             foreach (string roleName in roles)
@@ -122,7 +137,11 @@ namespace LifeGallery.BLL.Services
 
         public async Task<OperationDetails> UpdateProfile(UserDTO userDTO)
         {
-            Database.ProfileManager.Update(Mapper.Map<UserProfile>(userDTO));
+            var appUser = Database.UserManager.FindByName(userDTO.UserName);
+            var user = Mapper.Map<UserProfile>(userDTO);
+            user.Id = appUser.Id;
+            user.ApplicationUser = appUser;
+            Database.ProfileManager.Update(user);
             await Database.SaveAsync();
             return new OperationDetails(true, "Profile updated", "");
         }
