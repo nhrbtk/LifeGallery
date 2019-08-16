@@ -9,7 +9,7 @@ namespace LifeGallery.BLL.DTO
     public class LikeDTO
     {
         public int Id { get; set; }
-        public PhotoDTO Photo { get; set; }
-        public UserDTO UserDTO { get; set; }
+        public int PhotoId { get; set; }
+        public string UserId { get; set; }
     }
 }

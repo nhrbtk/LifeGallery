@@ -18,19 +18,50 @@ namespace LifeGallery.BLL.Services
             Mapper.Initialize
                 (cfg =>
                 {
-                    cfg.CreateMap<UserProfile, UserDTO>();
                     cfg.CreateMap<UserDTO, UserProfile>();
-                    cfg.CreateMap<PhotoDTO, Photo>();
-                    cfg.CreateMap<Photo, PhotoDTO>();
+                    cfg.CreateMap<UserProfile, UserDTO>()
+                    .ForMember("PhotosIds", x => x.MapFrom(u => u.Photos.Select(p => p.Id)))
+                    .ForMember("LikedIds", x => x.MapFrom(u => u.Liked.Select(l => l.Id)))
+                    .ForMember("CommentsIds", x => x.MapFrom(u => u.Comments.Select(c => c.Id)));
 
-                    cfg.CreateMap<Category, CategoryDTO>();
+                    cfg.CreateMap<PhotoDTO, Photo>();
+                    cfg.CreateMap<Photo, PhotoDTO>()
+                    .ForMember("UserId", x => x.MapFrom(p => p.UserProfile.Id))
+                    .ForMember("LikesIds", x => x.MapFrom(p => p.Likes.Select(l => l.Id)))
+                    .ForMember("CommentsIds", x => x.MapFrom(p => p.Comments.Select(c => c.Id)))
+                    .ForMember("CategoriesIds", x => x.MapFrom(p => p.Categories.Select(c => c.Id)));
+
                     cfg.CreateMap<CategoryDTO, Category>();
-                    cfg.CreateMap<Like, LikeDTO>();
+                    cfg.CreateMap<Category, CategoryDTO>()
+                    .ForMember("PhotosIds", x => x.MapFrom(c => c.Photos.Select(p => p.Id)));
+
                     cfg.CreateMap<LikeDTO, Like>();
-                    cfg.CreateMap<Comment, CommentDTO>();
+                    cfg.CreateMap<Like, LikeDTO>()
+                    .ForMember("PhotoId", x => x.MapFrom(l => l.Photo.Id))
+                    .ForMember("UserId", x => x.MapFrom(l => l.UserProfile.Id));
+
                     cfg.CreateMap<CommentDTO, Comment>();
+                    cfg.CreateMap<Comment, CommentDTO>()
+                    .ForMember("PhotoId", x => x.MapFrom(c => c.Photo.Id))
+                    .ForMember("UserId", x => x.MapFrom(c => c.UserProfile.Id));
                 });
         }
+
+        public ICategoryService CreateCategoryService(string connection)
+        {
+            return new CategoryService(new LGUnitOfWork(connection));
+        }
+
+        public ICommentService CreateCommentService(string connection)
+        {
+            return new CommentService(new LGUnitOfWork(connection));
+        }
+
+        public ILikeService CreateLikeService(string connection)
+        {
+            return new LikeService(new LGUnitOfWork(connection));
+        }
+
         public IPhotoService CreatePhotoService(string connection)
         {
             return new PhotoService(new LGUnitOfWork(connection));

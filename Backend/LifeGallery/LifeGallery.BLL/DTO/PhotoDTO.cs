@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace LifeGallery.BLL.DTO
 {
@@ -16,9 +17,9 @@ namespace LifeGallery.BLL.DTO
         public string Path { get; set; }
         public string Type { get; set; }
         public DateTime PublishingDate { get; set; }
-        public virtual ICollection<LikeDTO> Likes { get; set; }
-        public virtual ICollection<CommentDTO> Comments { get; set; }
-        public virtual ICollection<CategoryDTO> Tags { get; set; }
-        public virtual UserDTO User { get; set; }
+        public ICollection<int> LikesIds { get; set; }
+        public ICollection<int> CommentsIds { get; set; }
+        public ICollection<int> CategoriesIds { get; set; }
+        public string UserId { get; set; }
     }
 }

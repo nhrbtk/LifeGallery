@@ -19,7 +19,7 @@ namespace LifeGallery.DAL.Entities
         public DateTime PublishingDate { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Category> Tags { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
         public virtual UserProfile UserProfile { get; set; }
     }
 }

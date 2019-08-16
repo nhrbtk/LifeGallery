@@ -12,8 +12,8 @@ namespace LifeGallery.BLL.Interfaces
     {
         Task<OperationDetails> Create(PhotoDTO photoDto);
         Task<OperationDetails> UpdateInfo(PhotoDTO photoDto);
-        IEnumerable<PhotoDTO> GetUserPhotos(string userId);
+        PhotoDTO GetPhoto(int id);
         IEnumerable<PhotoDTO> GetFeed();
-        Task<OperationDetails> Delete(int id);
+        OperationDetails Delete(int id);
     }
 }

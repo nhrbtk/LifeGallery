@@ -20,6 +20,7 @@ namespace LifeGallery.BLL.Interfaces
         Task<OperationDetails> ChangeUserName(string id, string username);
         Task<OperationDetails> CheckUserName(string username);
         Task<OperationDetails> UpdateProfile(UserDTO userDTO);
+        IEnumerable<PhotoDTO> GetUserPhotos(string userId);
         Task<ClaimsIdentity> Authenticate(UserDTO userDTO);
         Task SetInitialData(UserDTO adminDto, List<string> roles);
     }

@@ -90,9 +90,18 @@ namespace LifeGallery.BLL.Services
                 item.Email = appUser.Email;
                 item.UserName = appUser.UserName;
             }
-
             return userDTOs;
+        }
 
+        public IEnumerable<PhotoDTO> GetUserPhotos(string userId)
+        {
+            var profile = Database.ProfileManager.Read(userId);
+            if (profile != null)
+            {
+                return Mapper.Map<IEnumerable<PhotoDTO>>(profile.Photos);
+            }
+            else
+                return null;
         }
 
         public UserDTO Read(string id)

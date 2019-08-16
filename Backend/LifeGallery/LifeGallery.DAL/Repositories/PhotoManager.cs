@@ -60,7 +60,18 @@ namespace LifeGallery.DAL.Repositories
 
         public void Update(Photo photo)
         {
-            db.Entry(photo ?? throw new NullReferenceException("Photo is null.")).State = EntityState.Modified;
+            //var oldPhoto = db.Photos.Find(photo.Id);
+            //oldPhoto.Description = photo.Description;
+            //oldPhoto.IsPrivate = photo.IsPrivate;
+            //oldPhoto.Name = photo.Name;
+            //oldPhoto.Path = photo.Path;
+            //oldPhoto.PublishingDate = photo.PublishingDate;
+            //oldPhoto.Type = photo.Type;
+            //oldPhoto.Comments = photo.Comments;
+            //oldPhoto.Categories = photo.Categories;
+            //oldPhoto.Likes = photo.Likes;
+            //oldPhoto.UserProfile = photo.UserProfile;
+            db.Entry(photo ?? throw new NullReferenceException("Photo is null.")).State = EntityState.Modified;            
         }
 
         #region IDisposable Support

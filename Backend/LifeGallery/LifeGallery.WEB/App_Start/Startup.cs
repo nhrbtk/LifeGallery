@@ -23,6 +23,9 @@ namespace LifeGallery.WEB.App_Start
         {
             app.CreatePerOwinContext<IUserService>(CreateUserService);
             app.CreatePerOwinContext<IPhotoService>(CreatePhotoService);
+            app.CreatePerOwinContext<ILikeService>(CreateLikeService);
+            app.CreatePerOwinContext<ICategoryService>(CreateCategoryService);
+            app.CreatePerOwinContext<ICommentService>(CreateCommentService);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
@@ -39,6 +42,21 @@ namespace LifeGallery.WEB.App_Start
         private IPhotoService CreatePhotoService()
         {
             return serviceCreator.CreatePhotoService("DefaultConnection");
+        }
+
+        private ILikeService CreateLikeService()
+        {
+            return serviceCreator.CreateLikeService("DefaultConnection");
+        }
+
+        private ICategoryService CreateCategoryService()
+        {
+            return serviceCreator.CreateCategoryService("DefaultConnection");
+        }
+
+        private ICommentService CreateCommentService()
+        {
+            return serviceCreator.CreateCommentService("DefaultConnection");
         }
     }
 }

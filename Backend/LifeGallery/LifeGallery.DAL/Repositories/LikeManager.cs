@@ -2,7 +2,9 @@
 using LifeGallery.DAL.Entities;
 using LifeGallery.DAL.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +23,20 @@ namespace LifeGallery.DAL.Repositories
         public void Create(Like like)
         {
             db.Likes.Add(like ?? throw new NullReferenceException("Like is null."));
+        }
+
+        public IEnumerable<Like> GetAll()
+        {
+            return db.Likes.Include(x=>x.Photo).Include(x=>x.UserProfile);
+        }
+
+        public void Delete(int id)
+        {
+            var like = db.Likes.Find(id);
+            if (like != null)
+            {
+                db.Likes.Remove(like);
+            }
         }
 
         #region IDisposable Support
@@ -57,6 +73,8 @@ namespace LifeGallery.DAL.Repositories
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
+
+
         #endregion
 
     }

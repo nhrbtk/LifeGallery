@@ -10,5 +10,8 @@ namespace LifeGallery.BLL.Interfaces
     {
         IUserService CreateUserService(string connection);
         IPhotoService CreatePhotoService(string connection);
+        ILikeService CreateLikeService(string connection);
+        ICategoryService CreateCategoryService(string connection);
+        ICommentService CreateCommentService(string connection);
     }
 }

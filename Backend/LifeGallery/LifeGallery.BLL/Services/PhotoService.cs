@@ -4,12 +4,14 @@ using LifeGallery.BLL.Infrastructure;
 using LifeGallery.BLL.Interfaces;
 using LifeGallery.DAL.Entities;
 using LifeGallery.DAL.Interfaces;
+using LifeGallery.DAL.Repositories;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace LifeGallery.BLL.Services
 {
@@ -27,8 +29,7 @@ namespace LifeGallery.BLL.Services
             try
             {
                 Photo photo = Mapper.Map<Photo>(photoDto);
-                
-                photo.UserProfile = Database.ProfileManager.Read(photoDto.User.Id);
+                photo.UserProfile = Database.ProfileManager.Read(photoDto.UserId);
                 Database.PhotoManager.Create(photo, photoDto.File);
                 await Database.SaveAsync();
             }
@@ -39,9 +40,25 @@ namespace LifeGallery.BLL.Services
             return new OperationDetails(true, "Photo added", "");
         }
 
-        public Task<OperationDetails> Delete(int id)
+        public OperationDetails Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Database.PhotoManager.Delete(id);
+            }
+            catch(Exception ex)
+            {
+                return new OperationDetails(false, ex.Message, ex.StackTrace);
+            }
+            return new OperationDetails(true, "Photo deleted", id.ToString());
+        }
+
+        public PhotoDTO GetPhoto(int id)
+        {
+            var p = Database.PhotoManager.GetInfo(id);
+            var photo = Mapper.Map<PhotoDTO>(p);
+            photo.File = Database.PhotoManager.GetImage(photo.Path);
+            return photo;
         }
 
         public IEnumerable<PhotoDTO> GetFeed()
@@ -54,18 +71,16 @@ namespace LifeGallery.BLL.Services
             return photoDTOs;
         }
 
-        public IEnumerable<PhotoDTO> GetUserPhotos(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<OperationDetails> UpdateInfo(PhotoDTO photoDto)
         {
             try
             {
-                Photo photo = Mapper.Map<Photo>(photoDto);
-                photo.UserProfile = Database.ProfileManager.Read(photo.UserProfile.Id);
-                Database.PhotoManager.Update(Mapper.Map<Photo>(photoDto));
+                Photo oldPhoto = Database.PhotoManager.GetInfo(photoDto.Id);
+                oldPhoto.PublishingDate = photoDto.PublishingDate;
+                oldPhoto.Type = photoDto.Type;
+                oldPhoto.Path = photoDto.Path;
+                oldPhoto.Description = photoDto.Description;
+                Database.PhotoManager.Update(oldPhoto);
                 await Database.SaveAsync();
             }
             catch (Exception ex)
