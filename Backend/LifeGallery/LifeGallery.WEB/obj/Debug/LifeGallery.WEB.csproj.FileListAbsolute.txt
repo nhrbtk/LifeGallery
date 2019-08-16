@@ -109,3 +109,5 @@ D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\bin\Microsoft.AspN
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\obj\Debug\LifeGallery.WEB.csproj.CopyComplete
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\obj\Debug\LifeGallery.WEB.dll
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\obj\Debug\LifeGallery.WEB.pdb
+D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\bin\ImageResizer.dll
+D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\bin\ImageResizer.xml

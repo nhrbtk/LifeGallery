@@ -1,4 +1,5 @@
-﻿using LifeGallery.BLL.DTO;
+﻿using ImageResizer;
+using LifeGallery.BLL.DTO;
 using LifeGallery.BLL.Interfaces;
 using LifeGallery.BLL.Services;
 using LifeGallery.WEB.Models;
@@ -140,14 +141,6 @@ namespace LifeGallery.WEB.Controllers
                 return BadRequest(result.Message);
             else
                 return Ok(result.Message);
-        }
-
-        [HttpDelete]
-        [Authorize]
-        [Route("api/{controler}/{id}/comment")]
-        public IHttpActionResult DeleteComment(int id)
-        {
-            throw new NotImplementedException();
         }
 
 
