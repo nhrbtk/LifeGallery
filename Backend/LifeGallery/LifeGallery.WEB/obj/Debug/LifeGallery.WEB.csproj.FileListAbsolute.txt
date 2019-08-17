@@ -111,3 +111,7 @@ D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\obj\Debug\LifeGall
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\obj\Debug\LifeGallery.WEB.pdb
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\bin\ImageResizer.dll
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\bin\ImageResizer.xml
+D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\bin\Microsoft.Owin.FileSystems.dll
+D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\bin\Microsoft.Owin.StaticFiles.dll
+D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\bin\Microsoft.Owin.FileSystems.xml
+D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WEB\bin\Microsoft.Owin.StaticFiles.xml

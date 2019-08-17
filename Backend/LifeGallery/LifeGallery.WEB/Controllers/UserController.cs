@@ -43,7 +43,8 @@ namespace LifeGallery.WEB.Controllers
                     AuthenticationManager.SignOut();
                     AuthenticationManager.SignIn(new AuthenticationProperties
                     {
-                        IsPersistent = true
+                        IsPersistent = true,
+                        ExpiresUtc = DateTime.UtcNow.AddDays(2)
                     }, claim);
                     return Ok("Authorized.");
                 }
