@@ -11,5 +11,7 @@ namespace LifeGallery.BLL.Interfaces
     public interface ICommentService:IDisposable
     {
         OperationDetails Create(CommentDTO commentDTO);
+        OperationDetails Delete(int id);
+        CommentDTO Read(int id);
     }
 }

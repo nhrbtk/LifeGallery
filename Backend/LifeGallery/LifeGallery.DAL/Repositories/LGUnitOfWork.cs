@@ -41,6 +41,11 @@ namespace LifeGallery.DAL.Repositories
             await db.SaveChangesAsync();
         }
 
+        public void Save()
+        {
+            db.SaveChanges();
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

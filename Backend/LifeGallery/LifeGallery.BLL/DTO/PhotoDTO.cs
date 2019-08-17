@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace LifeGallery.BLL.DTO
         public ICollection<int> LikesIds { get; set; }
         public ICollection<int> CommentsIds { get; set; }
         public ICollection<int> CategoriesIds { get; set; }
+        [Required]
         public string UserId { get; set; }
     }
 }

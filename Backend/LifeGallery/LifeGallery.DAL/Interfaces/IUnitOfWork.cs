@@ -16,6 +16,7 @@ namespace LifeGallery.DAL.Interfaces
         ICommentManager CommentManager { get; }
         ICategoryManager CategoryManager { get; }
         ILikeManager LikeManager { get; }
+        void Save();
         Task SaveAsync();
     }
 }

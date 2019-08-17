@@ -23,17 +23,66 @@ namespace LifeGallery.BLL.Services
 
         public OperationDetails Create(CommentDTO commentDTO)
         {
+            if (commentDTO.UserId == null)
+            {
+                return new OperationDetails(false, "User id is null", "");
+            }
+            if (commentDTO.Text == null)
+            {
+                return new OperationDetails(false, "Comment text is null", "");
+            }
+            Photo photo = Database.PhotoManager.GetInfo(commentDTO.PhotoId);
+            if (photo == null)
+            {
+                return new OperationDetails(false, "Photo with such id is not found", commentDTO.PhotoId.ToString());
+            }
+            UserProfile user = Database.ProfileManager.Read(commentDTO.UserId);
+            if (user == null)
+            {
+                return new OperationDetails(false, "User with such id is not found", commentDTO.UserId);
+            }
+            
             try
             {
                 Comment comment = Mapper.Map<Comment>(commentDTO);
+                comment.Photo = photo;
+                comment.UserProfile = user;
+                comment.Date = DateTime.UtcNow;
                 Database.CommentManager.Create(comment);
-                Database.SaveAsync();
+                Database.Save();
             }
             catch (Exception ex)
             {
                 return new OperationDetails(false, ex.Message, "");
             }
             return new OperationDetails(true, "Comment added.", "");
+        }
+
+        public OperationDetails Delete(int id)
+        {
+            try
+            {
+                Database.CommentManager.Delete(id);
+                return new OperationDetails(true, "Comment deleted", "");
+            }
+            catch(Exception ex)
+            {
+                return new OperationDetails(false, ex.Message, "");
+            }
+        }
+
+        public CommentDTO Read(int id)
+        {
+            var comment = Database.CommentManager.Read(id);
+            if (comment == null)
+            {
+                return null;
+            }
+            else
+            {
+                CommentDTO commentDTO = Mapper.Map<CommentDTO>(comment);
+                return commentDTO;
+            }
         }
 
         #region IDisposable Support

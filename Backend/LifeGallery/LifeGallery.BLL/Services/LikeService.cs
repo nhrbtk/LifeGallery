@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.ModelBinding;
 
 namespace LifeGallery.BLL.Services
 {
@@ -22,14 +23,41 @@ namespace LifeGallery.BLL.Services
 
         public OperationDetails Create(LikeDTO likeDTO)
         {
+            if (likeDTO == null)
+            {
+                return new OperationDetails(false, "likeDTO is null", "");
+            }
+            if (likeDTO.UserId == null)
+            {
+                return new OperationDetails(false, "UserId is null", "");
+            }
+
+            Photo photo = Database.PhotoManager.GetInfo(likeDTO.PhotoId);
+            if (photo == null)
+            {
+                return new OperationDetails(false, "Photo with such id is not found", likeDTO.PhotoId.ToString());
+            }
+
+            UserProfile user = Database.ProfileManager.Read(likeDTO.UserId);
+            if (user == null)
+            {
+                return new OperationDetails(false, "User with such id is not found", likeDTO.UserId);
+            }
+
+            if(Database.LikeManager.GetAll().Where(x => x.Photo.Id == likeDTO.PhotoId && x.UserProfile.Id == likeDTO.UserId).Count() > 0)
+            {
+                return new OperationDetails(false, "User already liked this photo", "");
+            }
+
             try
             {
-                Database.LikeManager.Create(new Like
+                Like like = new Like
                 {
-                    Photo = Database.PhotoManager.GetInfo(likeDTO.PhotoId),
-                    UserProfile = Database.ProfileManager.Read(likeDTO.UserId)
-                });
-                Database.SaveAsync();
+                    Photo = photo,
+                    UserProfile = user
+                };
+                Database.LikeManager.Create(like);
+                Database.Save();
             }
             catch(Exception ex)
             {
@@ -40,7 +68,7 @@ namespace LifeGallery.BLL.Services
 
         public OperationDetails Delete(LikeDTO likeDTO)
         {
-            var like = Database.LikeManager.GetAll().Where(l => l.Photo.Id == likeDTO.PhotoId && l.UserProfile.Id == likeDTO.UserId).SingleOrDefault();
+            var like = Database.LikeManager.GetAll().Where(l => l.Photo.Id == likeDTO.PhotoId && l.UserProfile.Id == likeDTO.UserId).FirstOrDefault();
             if (like != null)
             {
                 Database.LikeManager.Delete(like.Id);

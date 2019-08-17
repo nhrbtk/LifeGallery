@@ -90,6 +90,38 @@ namespace LifeGallery.BLL.Services
             return new OperationDetails(true, "Photo updated.", "");
         }
 
+        public IEnumerable<CommentDTO> GetPhotoComments(int id)
+        {
+            Photo photo = Database.PhotoManager.GetInfo(id);
+            if (photo == null || photo.Comments==null)
+            {
+                return null;
+            }
+            return Mapper.Map<IEnumerable<CommentDTO>>(photo.Comments);
+        }
+
+        public IEnumerable<LikeDTO> GetPhotoLikes(int id)
+        {
+            Photo photo = Database.PhotoManager.GetInfo(id);
+            if (photo == null || photo.Likes == null)
+            {
+                return null;
+            }
+            return Mapper.Map<IEnumerable<LikeDTO>>(photo.Likes);
+        }
+
+        public IEnumerable<CategoryDTO> GetPhotoCategories(int id)
+        {
+            Photo photo = Database.PhotoManager.GetInfo(id);
+            if (photo == null || photo.Categories == null)
+            {
+                return null;
+            }
+            return Mapper.Map<IEnumerable<CategoryDTO>>(photo.Categories);
+        }
+
+
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
@@ -124,6 +156,8 @@ namespace LifeGallery.BLL.Services
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
+
+        
         #endregion
     }
 }
