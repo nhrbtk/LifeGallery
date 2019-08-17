@@ -107,13 +107,13 @@ namespace LifeGallery.WEB.Controllers
             }
             else
             {
-                return BadRequest();
+                return NotFound();
             }
         }
 
         [HttpGet]
-        [Route("api/account/{username}")]
-        public IHttpActionResult GetUserProfile(string username)
+        [Route("api/{controller}/username/{username}")]
+        public IHttpActionResult GetUserProfileByUserName(string username)
         {
             var user = UserService.ReadByUserName(username);
             if (user != null)
@@ -122,14 +122,47 @@ namespace LifeGallery.WEB.Controllers
             }
             else
             {
-                return BadRequest();
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        [Route("api/{controller}/{id}")]
+        public IHttpActionResult GetUserProfile(string id)
+        {
+            var user = UserService.Read(id);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return NotFound();
             }
         }
 
         [HttpDelete]
-        [Route("api/account/{username}")]
+        [Route("api/account/{id}")]
         [Authorize(Roles = "admin")]
-        public IHttpActionResult DeleteUser(string username)
+        public IHttpActionResult DeleteUser(string id)
+        {
+            var result = UserService.Delete(id);
+            if (result.Succedeed)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
+
+
+        }
+
+        [HttpDelete]
+        [Route("api/account/username/{username}")]
+        [Authorize(Roles = "admin")]
+        public IHttpActionResult DeleteUserByUserName(string username)
         {
             var user = UserService.ReadByUserName(username);
             if (user != null)

@@ -5,6 +5,7 @@ using LifeGallery.BLL.Interfaces;
 using LifeGallery.DAL.Entities;
 using LifeGallery.DAL.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,12 +27,27 @@ namespace LifeGallery.BLL.Services
             try
             {
                 Database.CategoryManager.Create(Mapper.Map<Category>(categoryDTO));
+                Database.Save();
             }
             catch(Exception ex)
             {
                 return new OperationDetails(false, ex.Message, ex.StackTrace);
             }
             return new OperationDetails(true, "Category created", "");
+        }
+
+        public OperationDetails Delete(int id)
+        {
+            try
+            {
+                Database.CategoryManager.Delete(id);
+                Database.Save();
+            }
+            catch (Exception ex)
+            {
+                return new OperationDetails(false, ex.Message, ex.StackTrace);
+            }
+            return new OperationDetails(true, "Category deleted", "");
         }
 
         public IEnumerable<CategoryDTO> GetAll()
@@ -43,6 +59,22 @@ namespace LifeGallery.BLL.Services
         {
             return Mapper.Map<CategoryDTO>(Database.CategoryManager.Read(id));         
         }
+
+        public IEnumerable<PhotoDTO> GetCategoryPhotos(int id)
+        {
+            Category category = Database.CategoryManager.Read(id);
+            if(category==null || category.Photos == null)
+            {
+                return null;
+            }
+
+            var photoDTOs = Mapper.Map<IEnumerable<PhotoDTO>>(category.Photos);
+            foreach (var photoDTO in photoDTOs)
+            {
+                photoDTO.File = Database.PhotoManager.GetImage(photoDTO.Path);
+            }
+            return photoDTOs;
+        }     
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

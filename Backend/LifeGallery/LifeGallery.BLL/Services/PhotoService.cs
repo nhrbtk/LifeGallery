@@ -120,7 +120,31 @@ namespace LifeGallery.BLL.Services
             return Mapper.Map<IEnumerable<CategoryDTO>>(photo.Categories);
         }
 
+        public OperationDetails AddCategory(int photoId, int categoryId)
+        {
+            Photo photo = Database.PhotoManager.GetInfo(photoId);
+            if (photo == null)
+            {
+                return new OperationDetails(false, "Photo with such id doesn't exists", "");
+            }
 
+            Category category = Database.CategoryManager.Read(categoryId);
+            if (category == null)
+            {
+                return new OperationDetails(false, "Category with such id doesn't exists", "");
+            }
+
+            try
+            {
+                photo.Categories.Add(category);
+                Database.Save();
+                return new OperationDetails(true, "Photo added to category", "");
+            }
+            catch (Exception ex)
+            {
+                return new OperationDetails(false, ex.Message, "");
+            }
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

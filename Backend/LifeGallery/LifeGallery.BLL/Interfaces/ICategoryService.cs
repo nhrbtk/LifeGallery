@@ -15,5 +15,7 @@ namespace LifeGallery.BLL.Interfaces
         OperationDetails Create(CategoryDTO categoryDTO);
         IEnumerable<CategoryDTO> GetAll();
         CategoryDTO GetCategory(int id);
+        IEnumerable<PhotoDTO> GetCategoryPhotos(int id);
+        OperationDetails Delete(int id);
     }
 }

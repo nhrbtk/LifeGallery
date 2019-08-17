@@ -17,6 +17,7 @@ namespace LifeGallery.BLL.Interfaces
         IEnumerable<CommentDTO> GetPhotoComments(int id);
         IEnumerable<LikeDTO> GetPhotoLikes(int id);
         IEnumerable<CategoryDTO> GetPhotoCategories(int id);
+        OperationDetails AddCategory(int photoId, int categoryId);
         PhotoDTO GetPhoto(int id);
         IEnumerable<PhotoDTO> GetFeed();
         OperationDetails Delete(int id);

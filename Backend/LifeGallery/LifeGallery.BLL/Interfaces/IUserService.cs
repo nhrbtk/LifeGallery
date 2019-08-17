@@ -15,7 +15,7 @@ namespace LifeGallery.BLL.Interfaces
         UserDTO Read(string id);
         UserDTO ReadByUserName(string username);
         IEnumerable<UserDTO> GetAll();
-        Task<OperationDetails> Delete(string id);
+        OperationDetails Delete(string id);
         Task<OperationDetails> ChangePassword(string id, string currentPassword, string newPassword);
         Task<OperationDetails> ChangeUserName(string id, string username);
         Task<OperationDetails> CheckUserName(string username);

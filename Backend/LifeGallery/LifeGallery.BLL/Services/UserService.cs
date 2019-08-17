@@ -66,13 +66,13 @@ namespace LifeGallery.BLL.Services
             }
         }
 
-        public async Task<OperationDetails> Delete(string id)
+        public OperationDetails Delete(string id)
         {
-            ApplicationUser user = await Database.UserManager.FindByIdAsync(id);
+            ApplicationUser user = Database.UserManager.FindById(id);
             if (user != null)
             {
-                await Database.UserManager.DeleteAsync(user);
-                await Database.SaveAsync();
+                Database.UserManager.Delete(user);
+                Database.Save();
                 return new OperationDetails(true, "User deleted.", user.Id);
             }
             else

@@ -102,51 +102,58 @@ namespace LifeGallery.WEB.Controllers
             }
         }
 
-        [HttpPost]
-        [Authorize]
-        [Route("api/{controler}/{id}/like")]
-        public IHttpActionResult Like(int id)
+        [HttpGet]
+        [Route("api/{controler}/{id}/likes")]
+        public IHttpActionResult GetLikes(int id)
         {
-            var result = LikeService.Create(new LikeDTO { UserId = UserService.ReadByUserName(User.Identity.Name).Id, PhotoId = id });
-            if (!result.Succedeed)
-                return BadRequest(result.Message);
-            else
-                return Ok(result.Message);
+            var result = PhotoService.GetPhotoLikes(id);
+            return Ok(result);
         }
 
-        [HttpDelete]
-        [Authorize]
-        [Route("api/{controler}/{id}/like")]
-        public IHttpActionResult Unlike(int id)
+        [HttpGet]
+        [Route("api/{controler}/{id}/comments")]
+        public IHttpActionResult GetComments(int id)
         {
-            var result = LikeService.Delete(new LikeDTO { UserId = UserService.ReadByUserName(User.Identity.Name).Id, PhotoId = id });
-            if (!result.Succedeed)
-                return BadRequest(result.Message);
-            else
-                return Ok(result.Message);
+            var result = PhotoService.GetPhotoComments(id);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("api/{controler}/{id}/categories")]
+        public IHttpActionResult GetCategories(int id)
+        {
+            var result = PhotoService.GetPhotoCategories(id);
+            return Ok(result);
         }
 
         [HttpPost]
-        [Authorize]
-        [Route("api/{controler}/{id}/comment")]
-        public IHttpActionResult AddComment(int id, [FromBody]CommentDTO commentDTO)
+        [Route("api/{controller}/{photoId}/category/{categoryId}")]
+        public IHttpActionResult AddCategoryToPhoto(int photoId, int categoryId)
         {
-            if (commentDTO == null)
-                return BadRequest("Object is null");
-            commentDTO.Date = DateTime.Now;
-            commentDTO.PhotoId = id;
-            commentDTO.UserId = UserService.ReadByUserName(User.Identity.Name).Id;
-            var result = CommentService.Create(commentDTO);
-            if (!result.Succedeed)
-                return BadRequest(result.Message);
-            else
+            var result = PhotoService.AddCategory(photoId, categoryId);
+            if (result.Succedeed)
+            {
                 return Ok(result.Message);
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
         }
 
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
+            var result = PhotoService.Delete(id);
+            if (result.Succedeed)
+            {
+                return Ok(result.Message);
+            }
+            else
+            {
+                return BadRequest(result.Message);
+            }
         }
     }
 }
