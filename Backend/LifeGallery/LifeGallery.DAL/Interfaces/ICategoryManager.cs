@@ -12,6 +12,6 @@ namespace LifeGallery.DAL.Interfaces
         void Create(Category category);
         Category Read(int id);
         IEnumerable<Category> GetAll();
-        void Delete(int id);
+        void Delete(Category category);
     }
 }

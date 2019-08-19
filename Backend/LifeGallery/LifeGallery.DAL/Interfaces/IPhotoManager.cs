@@ -9,11 +9,11 @@ namespace LifeGallery.DAL.Interfaces
 {
     public interface IPhotoManager : IDisposable
     {
-        void Create(Photo photo, byte[] image);
-        IEnumerable<Photo> GetInfoAll();
-        Photo GetInfo(int id);
-        byte[] GetImage(string path);
+        void Create(Photo photo, byte[] image);        
+        IEnumerable<Photo> GetInfoAll();        
+        Photo GetInfo(int id);        
+        byte[] GetImage(string path);       
         void Update(Photo photo);
-        void Delete(int id);
+        void Delete(Photo photo);
     }
 }

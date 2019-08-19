@@ -9,6 +9,10 @@ namespace LifeGallery.DAL.Entities
 {
     public class Category
     {
+        public Category()
+        {
+            Photos = new List<Photo>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }

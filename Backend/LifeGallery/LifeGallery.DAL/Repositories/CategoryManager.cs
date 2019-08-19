@@ -15,21 +15,17 @@ namespace LifeGallery.DAL.Repositories
 
         public CategoryManager(LifeGalleryContext context)
         {
-            db = context ?? throw new NullReferenceException("Context is null.");
+            db = context;
         }
 
         public void Create(Category category)
         {
-            db.Categories.Add(category ?? throw new NullReferenceException("Category is null."));
+            db.Categories.Add(category);
         }
 
-        public void Delete(int id)
+        public void Delete(Category category)
         {
-            Category category = db.Categories.Find(id);
-            if(category != null)
-            {
-                db.Categories.Remove(category);
-            }
+            db.Categories.Remove(category);
         }
 
         public IEnumerable<Category> GetAll()

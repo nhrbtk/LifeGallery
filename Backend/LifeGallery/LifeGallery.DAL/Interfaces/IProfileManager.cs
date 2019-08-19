@@ -9,10 +9,10 @@ namespace LifeGallery.DAL.Interfaces
 {
     public interface IProfileManager : IDisposable
     {
-        void Create(UserProfile profile);
-        UserProfile Read(string id);
-        IEnumerable<UserProfile> GetAll();
-        void Update(UserProfile profile);
-        void Delete(string id);
+        void Create(UserProfile profile);        
+        UserProfile Read(string id);        
+        IEnumerable<UserProfile> GetAll();        
+        void Update(UserProfile profile);        
+        void Delete(UserProfile profile);
     }
 }

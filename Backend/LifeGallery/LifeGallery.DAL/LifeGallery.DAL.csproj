@@ -85,6 +85,7 @@
     <Compile Include="Entities\UserProfile.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
+    <Compile Include="Infrastructure\FileOperationException.cs" />
     <Compile Include="Interfaces\ICommentManager.cs" />
     <Compile Include="Interfaces\ILikeManager.cs" />
     <Compile Include="Interfaces\IPhotoManager.cs" />

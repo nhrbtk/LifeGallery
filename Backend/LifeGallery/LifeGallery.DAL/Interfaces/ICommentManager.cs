@@ -9,10 +9,10 @@ namespace LifeGallery.DAL.Interfaces
 {
     public interface ICommentManager : IDisposable
     {
-        void Create(Comment comment);
-        Comment Read(int id);
+        void Create(Comment comment);        
+        Comment Read(int id);       
         IEnumerable<Comment> GetAll();
         void Update(Comment comment);
-        void Delete(int id);
+        void Delete(Comment comment);
     }
 }

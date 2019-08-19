@@ -1,5 +1,6 @@
 ﻿using LifeGallery.DAL.EF;
 using LifeGallery.DAL.Entities;
+using LifeGallery.DAL.Infrastructure;
 using LifeGallery.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,35 +18,28 @@ namespace LifeGallery.DAL.Repositories
 
         public PhotoManager(LifeGalleryContext context)
         {
-            db = context ?? throw new NullReferenceException("Context is null.");
+            db = context;
         }
 
         public void Create(Photo photo, byte[] image)
         {
-            if(File.Exists(photo.Path ?? throw new ArgumentNullException("Path is null.")))
-            {
-                throw new InvalidOperationException("File already exists");
-            }
-            db.Photos.Add(photo ?? throw new NullReferenceException("Photo is null."));
-            File.WriteAllBytes(photo.Path, image ?? throw new ArgumentNullException("Image is null."));
+            File.WriteAllBytes(photo.Path, image);
+            db.Photos.Add(photo);
         }
 
-        public void Delete(int id)
-        {
-            Photo photo = db.Photos.Find(id);
-            if (photo != null)
+        public void Delete(Photo photo)
+        {            
+            string photoPath = photo.Path;
+            if (File.Exists(photoPath))
             {
-                if (File.Exists(photo.Path))
-                {
-                    File.Delete(photo.Path);
-                }
-                db.Photos.Remove(photo);
+                File.Delete(photoPath);
             }
+            db.Photos.Remove(photo);
         }
 
         public byte[] GetImage(string path)
         {
-            return File.Exists(path) ? File.ReadAllBytes(path) : throw new FileNotFoundException();
+            return File.Exists(path) ? File.ReadAllBytes(path) : throw new FileNotFoundException("Directory or file not found.");
         }
 
         public Photo GetInfo(int id)
@@ -60,18 +54,7 @@ namespace LifeGallery.DAL.Repositories
 
         public void Update(Photo photo)
         {
-            //var oldPhoto = db.Photos.Find(photo.Id);
-            //oldPhoto.Description = photo.Description;
-            //oldPhoto.IsPrivate = photo.IsPrivate;
-            //oldPhoto.Name = photo.Name;
-            //oldPhoto.Path = photo.Path;
-            //oldPhoto.PublishingDate = photo.PublishingDate;
-            //oldPhoto.Type = photo.Type;
-            //oldPhoto.Comments = photo.Comments;
-            //oldPhoto.Categories = photo.Categories;
-            //oldPhoto.Likes = photo.Likes;
-            //oldPhoto.UserProfile = photo.UserProfile;
-            db.Entry(photo ?? throw new NullReferenceException("Photo is null.")).State = EntityState.Modified;            
+            db.Entry(photo).State = EntityState.Modified;            
         }
 
         #region IDisposable Support

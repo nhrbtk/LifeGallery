@@ -17,12 +17,12 @@ namespace LifeGallery.DAL.Repositories
 
         public LikeManager(LifeGalleryContext context)
         {
-            db = context ?? throw new NullReferenceException("Context is null.");
+            db = context;
         }
 
         public void Create(Like like)
         {
-            db.Likes.Add(like ?? throw new NullReferenceException("Like is null."));
+            db.Likes.Add(like);
         }
 
         public IEnumerable<Like> GetAll()
@@ -30,13 +30,14 @@ namespace LifeGallery.DAL.Repositories
             return db.Likes.Include(x=>x.Photo).Include(x=>x.UserProfile);
         }
 
-        public void Delete(int id)
+        public void Delete(Like like)
         {
-            var like = db.Likes.Find(id);
-            if (like != null)
-            {
-                db.Likes.Remove(like);
-            }
+            db.Likes.Remove(like);
+        }
+
+        public IEnumerable<Like> Find(Func<Like,bool> func)
+        {
+            return db.Likes.Where(func);
         }
 
         #region IDisposable Support

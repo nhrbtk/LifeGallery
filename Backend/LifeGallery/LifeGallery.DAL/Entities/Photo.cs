@@ -9,10 +9,15 @@ namespace LifeGallery.DAL.Entities
 {
     public class Photo
     {
+        public Photo()
+        {
+            Likes = new List<Like>();
+            Comments = new List<Comment>();
+            Categories = new List<Category>();
+        }
         public int Id { get; set; }
         public string Description { get; set; }
         public bool IsPrivate { get; set; }
-        public string Name { get; set; }
         public string Path { get; set; }
         public string Type { get; set; }
         [Column(TypeName = "datetime2")]

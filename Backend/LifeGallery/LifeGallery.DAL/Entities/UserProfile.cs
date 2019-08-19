@@ -10,6 +10,12 @@ namespace LifeGallery.DAL.Entities
 {
     public class UserProfile
     {
+        public UserProfile()
+        {
+            Photos = new List<Photo>();
+            Liked = new List<Like>();
+            Comments = new List<Comment>();
+        }
         [Key]
         [ForeignKey("ApplicationUser")]
         public string Id { get; set; }

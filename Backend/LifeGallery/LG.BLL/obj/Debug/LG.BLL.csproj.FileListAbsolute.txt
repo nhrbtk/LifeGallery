@@ -1,0 +1,2 @@
+D:\EPAM\Pizdec\LifeGallery\LG.BLL\obj\Debug\LG.BLL.csprojAssemblyReference.cache
+D:\EPAM\Pizdec\LifeGallery\LG.BLL\obj\Debug\LG.BLL.csproj.CoreCompileInputs.cache

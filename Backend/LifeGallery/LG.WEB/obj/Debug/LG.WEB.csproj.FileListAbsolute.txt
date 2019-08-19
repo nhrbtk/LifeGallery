@@ -1,0 +1,2 @@
+D:\EPAM\Pizdec\LifeGallery\LG.WEB\obj\Debug\LG.WEB.csprojAssemblyReference.cache
+D:\EPAM\Pizdec\LifeGallery\LG.WEB\obj\Debug\LG.WEB.csproj.CoreCompileInputs.cache

@@ -16,21 +16,17 @@ namespace LifeGallery.DAL.Repositories
 
         public CommentManager(LifeGalleryContext context)
         {
-            db = context ?? throw new NullReferenceException("Context is null.");
+            db = context;
         }
 
         public void Create(Comment comment)
         {
-            db.Comments.Add(comment ?? throw new NullReferenceException("Comment is null."));
+            db.Comments.Add(comment);
         }
 
-        public void Delete(int id)
+        public void Delete(Comment comment)
         {
-            Comment comment = db.Comments.Find(id);
-            if (comment != null)
-            {
-                db.Comments.Remove(comment);
-            }
+            db.Comments.Remove(comment);
         }
 
         public IEnumerable<Comment> GetAll()
@@ -40,12 +36,12 @@ namespace LifeGallery.DAL.Repositories
 
         public Comment Read(int id)
         {
-            return db.Comments.Find(id);
+            return db.Comments.Include(x => x.Photo).Include(x => x.UserProfile).FirstOrDefault(x => x.Id == id);
         }
 
         public void Update(Comment comment)
         {
-            db.Entry(comment ?? throw new NullReferenceException("Comment is null.")).State = EntityState.Modified;
+            db.Entry(comment).State = EntityState.Modified;
         }
 
         #region IDisposable Support

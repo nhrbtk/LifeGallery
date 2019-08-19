@@ -10,8 +10,10 @@ namespace LifeGallery.DAL.Interfaces
 {
     public interface ILikeManager : IDisposable
     {
-        void Create(Like like);
+        void Create(Like like);        
         IEnumerable<Like> GetAll();
-        void Delete(int id);
+        IEnumerable<Like> Find(Func<Like, bool> func);
+        void Delete(Like like);       
+
     }
 }
