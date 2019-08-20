@@ -134,7 +134,7 @@ namespace LG.WEB.Controllers
             }
         }
 
-        [Authorize(Roles="admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [Route("api/users/{id}/role")]
         public async Task<IHttpActionResult> SetRole(string id, [FromUri]string role)

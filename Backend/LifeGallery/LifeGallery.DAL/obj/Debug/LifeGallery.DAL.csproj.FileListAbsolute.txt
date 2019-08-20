@@ -1,4 +1,3 @@
-D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.DAL\obj\Debug\LifeGallery.DAL.csprojAssemblyReference.cache
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.DAL\obj\Debug\LifeGallery.DAL.csproj.CoreCompileInputs.cache
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.DAL\bin\Debug\LifeGallery.DAL.dll.config
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.DAL\bin\Debug\LifeGallery.DAL.dll

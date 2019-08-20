@@ -31,6 +31,10 @@ namespace LG.BLL.Services
         {
             if (id == null || role == null)
                 return new OperationDetails(false, "Input is null.", id == null ? "Id" : "Role");
+            if (Database.ProfileManager.Read(id) == null)
+                return new OperationDetails(false, "User not found.", "");
+            if(await Database.RoleManager.RoleExistsAsync(role) == false)
+                return new OperationDetails(false, "Role not found.", "");
 
             var result = await Database.UserManager.AddToRoleAsync(id, role);
             return new OperationDetails(result.Succeeded, result.Errors?.FirstOrDefault() ?? "Error.", "");
