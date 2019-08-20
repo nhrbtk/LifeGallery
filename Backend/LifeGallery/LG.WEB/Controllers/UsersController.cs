@@ -198,6 +198,9 @@ namespace LG.WEB.Controllers
             if (id == null)
                 return BadRequest("Id is null.");
 
+            if (User.Identity.GetUserId() != id)
+                return Unauthorized(); 
+
             if (ModelState.IsValid)
             {
                 var result = UserService.UpdateProfile(updateModel);
