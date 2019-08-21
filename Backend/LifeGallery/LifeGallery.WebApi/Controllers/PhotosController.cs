@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using WebApi.OutputCache.V2;
 
 namespace LifeGallery.WebApi.Controllers
