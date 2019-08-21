@@ -1,9 +1,6 @@
 ﻿using LifeGallery.BLL.DTO;
 using LifeGallery.BLL.Interfaces;
 using Microsoft.AspNet.Identity.Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -17,6 +14,18 @@ namespace LifeGallery.WebApi.Controllers
         public IHttpActionResult GetCategories()
         {
             var categories = CategoryService.GetCategories();
+            if (categories != null)
+                return Ok(categories);
+            else
+                return NotFound();
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetCategoriesByName([FromUri]string name)
+        {
+            if (name == null)
+                return BadRequest();
+            var categories = CategoryService.SearchCategories(name);
             if (categories != null)
                 return Ok(categories);
             else

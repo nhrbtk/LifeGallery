@@ -117,6 +117,22 @@ namespace LifeGallery.WebApi.Controllers
         }
 
         [HttpGet]
+        public IHttpActionResult SearchUsers([FromUri]string username)
+        {
+            if (username == null)
+                return BadRequest();
+            var result = UserService.SearchByUsername(username);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
         public IHttpActionResult GetUserProfile(string id)
         {
             if (id == null)

@@ -92,6 +92,25 @@ namespace LifeGallery.BLL.Services
             return categoryDTOs;
         }
 
+        public IEnumerable<CategoryDTO> SearchCategories(string name)
+        {
+            var categories = Database.CategoryManager.GetAll()?.Where(c=>c.Name.Contains(name));
+            if (categories == null)
+                return null;
+
+            List<CategoryDTO> categoryDTOs = new List<CategoryDTO>();
+            foreach (var cat in categories)
+            {
+                CategoryDTO categoryDTO = new CategoryDTO()
+                {
+                    Id = cat.Id,
+                    Name = cat.Name
+                };
+                categoryDTOs.Add(categoryDTO);
+            }
+            return categoryDTOs;
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

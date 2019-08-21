@@ -12,7 +12,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LifeGallery.BLL.Services
@@ -41,9 +40,9 @@ namespace LifeGallery.BLL.Services
         public async Task<ClaimsIdentity> AuthenticateAsync(LoginModel loginModel)
         {
             ClaimsIdentity claim = null;
-            // находим пользователя
+            
             ApplicationUser user = await Database.UserManager.FindAsync(loginModel.UserName, loginModel.Password);
-            // авторизуем его и возвращаем объект ClaimsIdentity
+            
             if (user != null)
                 claim = await Database.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             return claim;
@@ -113,6 +112,33 @@ namespace LifeGallery.BLL.Services
                         Birthdate = u.Birthdate,
                         ProfilePhoto = u.ProfilePhoto,
                         PhotosCount = u.Photos.Count()
+                    };
+                    usersInfo.Add(userInfo);
+                }
+            }
+            return usersInfo;
+        }
+
+        public IEnumerable<UserInfo> SearchByUsername(string username)
+        {
+            var users = Database.UserManager.Users.Where(u => u.UserName.Contains(username));
+            List<UserInfo> usersInfo = new List<UserInfo>();
+            if (users != null)
+            {
+                foreach (var u in users)
+                {
+                    var profile = u.UserProfile;
+                    UserInfo userInfo = new UserInfo()
+                    {
+                        Id = u.Id,
+                        Email = u.Email,
+                        UserName = u.UserName,
+                        //Role=u.ApplicationUser.Roles.
+                        Name = profile.Name,
+                        Bio = profile.Bio,
+                        Birthdate = profile.Birthdate,
+                        ProfilePhoto = profile.ProfilePhoto,
+                        PhotosCount = profile.Photos.Count()
                     };
                     usersInfo.Add(userInfo);
                 }

@@ -110,3 +110,6 @@ D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WebApi\bin\Microsoft.A
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WebApi\obj\Debug\LifeGallery.WebApi.csproj.CopyComplete
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WebApi\obj\Debug\LifeGallery.WebApi.dll
 D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WebApi\obj\Debug\LifeGallery.WebApi.pdb
+D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WebApi\bin\System.Web.Cors.dll
+D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WebApi\bin\System.Web.Http.Cors.dll
+D:\EPAM\final\LifeGallery\Backend\LifeGallery\LifeGallery.WebApi\bin\System.Web.Http.Cors.xml

@@ -15,6 +15,7 @@ namespace LifeGallery.BLL.Interfaces
         Task<OperationDetails> CreateAsync(RegisterModel registerModel);
         UserInfo Read(string id);
         IEnumerable<UserInfo> GetAll();
+        IEnumerable<UserInfo> SearchByUsername(string username);
         Task<OperationDetails> DeleteAsync(string id);
         OperationDetails UpdateProfile(UserUpdateModel updateModel);
         IEnumerable<PhotoInfoModel> GetUserPhotosInfo(string userId);

@@ -15,5 +15,6 @@ namespace LifeGallery.BLL.Interfaces
         Task<OperationDetails> Delete(int id);
         IEnumerable<PhotoInfoModel> GetPhotosByCategory(int id);
         IEnumerable<CategoryDTO> GetCategories();
+        IEnumerable<CategoryDTO> SearchCategories(string name);
     }
 }
